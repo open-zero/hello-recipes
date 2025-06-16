@@ -8,24 +8,26 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import {
-  useImportRecipe,
-  type ImportedRecipe,
-} from '@open-zero/features/recipe-imports';
+import { useImportRecipeQuick } from '@open-zero/features/recipe-imports';
+import { useSnackbar } from 'notistack';
 import { useEffect, useRef, useState } from 'react';
 
 interface Props {
   open: boolean;
   onClose: () => void;
-  onImport: (importedRecipe: ImportedRecipe, websitePageId: string) => void;
 }
 
-export function ImportRecipeDialog({ open, onClose, onImport }: Props) {
+export function QuickImportRecipeDialog({ open, onClose }: Props) {
   const [url, setUrl] = useState('');
-  const importRecipe = useImportRecipe({
+  const { enqueueSnackbar } = useSnackbar();
+  const importRecipeQuick = useImportRecipeQuick({
     mutationConfig: {
-      onSuccess: (res) => {
-        onImport(res.recipe, res.websitePageId);
+      onSuccess: () => {
+        enqueueSnackbar('Importing recipe... This will take a few seconds', {
+          variant: 'success',
+        });
+
+        onClose();
       },
     },
   });
@@ -36,11 +38,13 @@ export function ImportRecipeDialog({ open, onClose, onImport }: Props) {
       setTimeout(() => {
         textFieldRef.current?.focus();
       }, 100);
+    } else {
+      setUrl('');
     }
   }, [open]);
 
   function handleImportRecipe() {
-    if (importRecipe.isPending) {
+    if (importRecipeQuick.isPending) {
       return;
     }
 
@@ -48,7 +52,7 @@ export function ImportRecipeDialog({ open, onClose, onImport }: Props) {
       return;
     }
 
-    importRecipe.mutate(url);
+    importRecipeQuick.mutate(url);
   }
 
   return (
@@ -56,12 +60,12 @@ export function ImportRecipeDialog({ open, onClose, onImport }: Props) {
       disableRestoreFocus
       open={open}
       onClose={() => {
-        if (!importRecipe.isPending) {
+        if (!importRecipeQuick.isPending) {
           onClose();
         }
       }}
     >
-      <DialogTitle>Import recipe</DialogTitle>
+      <DialogTitle>Quick import</DialogTitle>
       <DialogContent>
         <Typography sx={{ mb: 2 }}>
           Paste the url of the recipe you want to import
@@ -81,15 +85,15 @@ export function ImportRecipeDialog({ open, onClose, onImport }: Props) {
               handleImportRecipe();
             }
           }}
-          disabled={importRecipe.isPending}
+          disabled={importRecipeQuick.isPending}
         />
       </DialogContent>
       <DialogActions>
-        <Button disabled={importRecipe.isPending} onClick={onClose}>
+        <Button disabled={importRecipeQuick.isPending} onClick={onClose}>
           Cancel
         </Button>
         <Button
-          loading={importRecipe.isPending}
+          loading={importRecipeQuick.isPending}
           variant="contained"
           startIcon={<DownloadRoundedIcon />}
           onClick={() => {

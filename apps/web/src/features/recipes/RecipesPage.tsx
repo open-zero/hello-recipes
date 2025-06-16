@@ -6,6 +6,8 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
 import { useMeasure } from 'react-use';
 import { useSignedInUserId } from '../auth/useSignedInUserId';
+import { RecipeImportCard } from '../recipe-imports/RecipeImportCard';
+import { useParsingRecipeImports } from '../recipe-imports/useParsingRecipeImports';
 import { EmptyRecipes } from './EmptyRecipes';
 import { RecipeCard } from './RecipeCard';
 
@@ -16,6 +18,9 @@ export function RecipesPage() {
   );
   const [search, setSearch] = useState('');
   const [searchFocused, setSearchFocused] = useState(false);
+  const parsingRecipeImports = useParsingRecipeImports({
+    enableRecipeRefreshing: true,
+  });
   const [ref, { width }] = useMeasure<HTMLDivElement>();
   const columns = Math.max(1, Math.floor((width + 16) / (256 + 16)));
 
@@ -93,6 +98,23 @@ export function RecipesPage() {
           />
         </Box>
       </Box>
+      {(parsingRecipeImports?.length ?? 0) > 0 && (
+        <Grid
+          container
+          spacing={2}
+          columns={columns}
+          sx={{
+            mb: 2,
+          }}
+        >
+          {width !== 0 &&
+            parsingRecipeImports?.map((recipeImport) => (
+              <Grid key={recipeImport.id} size={1}>
+                <RecipeImportCard recipeImport={recipeImport} />
+              </Grid>
+            ))}
+        </Grid>
+      )}
       <Grid ref={ref} container spacing={2} columns={columns}>
         {width !== 0 &&
           filteredRecipes.map((recipe) => (

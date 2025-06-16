@@ -8,7 +8,7 @@ const importedRecipeSchemaId = 'ImportedRecipe';
 export type ImportedRecipe = Static<typeof importedRecipeSchema>;
 export const importedRecipeSchema = Type.Object(
   {
-    name: Nullable(Type.String()),
+    name: Type.String(),
 
     description: Nullable(Type.String()),
 
@@ -24,7 +24,7 @@ export const importedRecipeSchema = Type.Object(
     ingredientGroups: Nullable(
       Type.Array(
         Type.Object({
-          title: Nullable(Type.String()),
+          name: Type.String(),
           ingredients: Type.Array(importedIngredientSchema),
         }),
       ),
@@ -33,7 +33,7 @@ export const importedRecipeSchema = Type.Object(
     instructionGroups: Nullable(
       Type.Array(
         Type.Object({
-          title: Nullable(Type.String()),
+          name: Type.String(),
           instructions: Type.Array(Type.String()),
         }),
       ),

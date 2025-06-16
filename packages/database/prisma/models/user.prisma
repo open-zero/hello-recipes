@@ -23,6 +23,7 @@ model User {
   recipeBookRequests RecipeBookRequest[]
   sessions           Session[]
   accounts           Account[]
+  RecipeImports      RecipeImport[]
 
   @@map("users")
 }

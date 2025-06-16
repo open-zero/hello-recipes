@@ -1,0 +1,21 @@
+model RecipeImport {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at")
+
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id])
+
+  url String
+
+  status RecipeImportStatus @default(parsing)
+
+  error String?
+
+  @@map("recipe_imports")
+}
+
+enum RecipeImportStatus {
+  parsing
+  complete
+  failed
+}

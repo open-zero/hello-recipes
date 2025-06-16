@@ -188,7 +188,7 @@ export async function getLlmImportRecipe(urlString: string) {
 
 const zodLlmRecipeSchema = z
   .object({
-    name: z.string().nullable(),
+    name: z.string(),
     description: z
       .string()
       .nullable()
@@ -201,7 +201,7 @@ const zodLlmRecipeSchema = z
       .array(
         z
           .object({
-            title: z.string(),
+            name: z.string(),
             ingredients: z.array(
               z
                 .object({
@@ -225,7 +225,7 @@ const zodLlmRecipeSchema = z
       .array(
         z
           .object({
-            title: z.string().nullable(),
+            name: z.string(),
             instructions: z.array(z.string()),
           })
           .strict(),

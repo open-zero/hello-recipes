@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import { Link } from '@tanstack/react-router';
 import { useState } from 'react';
+import { QuickImportRecipeDialog } from '../recipes/QuickImportRecipeDialog';
 
 interface Props {
   onOptionClick?: () => void;
@@ -21,6 +22,7 @@ interface Props {
 }
 
 export function NewButton({ onOptionClick, slotProps }: Props) {
+  const [quickImportDialogOpen, setQuickImportDialogOpen] = useState(false);
   const [newMenuAnchorEl, setNewMenuAnchorEl] = useState<null | HTMLElement>(
     null,
   );
@@ -75,31 +77,17 @@ export function NewButton({ onOptionClick, slotProps }: Props) {
             <ListItemText>Recipe</ListItemText>
           </Link>
         </MenuItem>
-        <MenuItem sx={{ p: 0 }}>
-          <Link
-            to="/app/recipes/new"
-            search={{
-              importFromUrl: true,
-            }}
-            style={{
-              textDecoration: 'none',
-              color: 'inherit',
-              padding: '6px 16px',
-              display: 'flex',
-              alignItems: 'center',
-              width: '100%',
-            }}
-            onClick={() => {
-              setNewMenuAnchorEl(null);
-
-              onOptionClick?.();
-            }}
-          >
-            <ListItemIcon>
-              <LinkRoundedIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText>Recipe from url</ListItemText>
-          </Link>
+        <MenuItem
+          onClick={() => {
+            setQuickImportDialogOpen(true);
+            setNewMenuAnchorEl(null);
+            onOptionClick?.();
+          }}
+        >
+          <ListItemIcon>
+            <LinkRoundedIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Quick import</ListItemText>
         </MenuItem>
         <MenuItem sx={{ p: 0 }}>
           <Link
@@ -125,6 +113,12 @@ export function NewButton({ onOptionClick, slotProps }: Props) {
           </Link>
         </MenuItem>
       </Menu>
+      <QuickImportRecipeDialog
+        open={quickImportDialogOpen}
+        onClose={() => {
+          setQuickImportDialogOpen(false);
+        }}
+      />
     </>
   );
 }
