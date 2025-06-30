@@ -26,7 +26,7 @@ import { getRecipeQueryOptions } from '@open-zero/features/recipes';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 import { useSnackbar } from 'notistack';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useWakeLock } from 'react-screen-wake-lock';
 import { Ingredient } from './Ingredient';
 import { Nutrition } from './Nutrition';
@@ -61,6 +61,12 @@ export function Recipe({ readOnly, recipeId }: Props) {
   );
   const [servingsAnchorEl, setServingsAnchorEl] =
     useState<HTMLButtonElement | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const servingsMultiplier = recipe.servings
     ? (getNumberFromInput(servingsModifier) ?? 1) / recipe.servings
     : (getNumberFromInput(servingsModifier) ?? 1);
@@ -335,7 +341,7 @@ export function Recipe({ readOnly, recipeId }: Props) {
           </Grid>
         )}
       </Grid>
-      {isWakeLockSupported && (
+      {isWakeLockSupported && isMounted && (
         <FormGroup sx={{ mb: 2 }}>
           <FormControlLabel
             control={
