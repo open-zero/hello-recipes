@@ -22,7 +22,6 @@ function RootComponent() {
   return (
     <>
       <HeadContent />
-      <title>Hello Recipes</title>
       <Outlet />
       <ReactQueryDevtools buttonPosition="top-right" />
       <TanStackRouterDevtools position="bottom-right" />
