@@ -71,8 +71,6 @@ export function Recipe({ readOnly, recipeId }: Props) {
 
   return (
     <>
-      <title>{recipe.name}</title>
-      <meta property="og:title" content={recipe.name} />
       <Grid container spacing={4} sx={{ mb: 2 }}>
         <Grid
           size={{

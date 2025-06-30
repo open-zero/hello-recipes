@@ -189,11 +189,6 @@ export function CreateRecipePage({ defaultValues, updateRecipeId }: Props) {
         width: '100%',
       }}
     >
-      <title>
-        {updateRecipeId
-          ? `Edit ${defaultValues?.recipeName ?? 'recipe'}`
-          : 'New recipe'}
-      </title>
       <form
         onSubmit={(e) => {
           e.preventDefault();
