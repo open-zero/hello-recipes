@@ -62,9 +62,9 @@ export function Layout() {
     return <Navigate to="/sign-in" />;
   }
 
-  if (!routeContext.userId) {
-    return null;
-  }
+  // if (!routeContext.userId) {
+  //   return null;
+  // }
 
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>

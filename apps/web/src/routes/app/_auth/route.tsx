@@ -1,9 +1,15 @@
 import { authClient } from '#src/features/auth/authClient';
 import { Layout } from '#src/features/layout/Layout';
-import { createFileRoute, Navigate } from '@tanstack/react-router';
+import { createFileRoute, Navigate, useLocation } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/app/_auth')({
-  component: () => (
+  component: Component,
+});
+
+function Component() {
+  const location = useLocation();
+
+  return (
     <>
       <SignedIn>
         <Layout />
@@ -17,8 +23,8 @@ export const Route = createFileRoute('/app/_auth')({
         />
       </SignedOut>
     </>
-  ),
-});
+  );
+}
 
 function SignedIn({ children }: { children: React.ReactNode }) {
   const { data: session, isPending, error } = authClient.useSession();
