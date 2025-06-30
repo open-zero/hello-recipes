@@ -12,6 +12,10 @@ export const Route = createFileRoute('/app/shared-recipes/$recipeId')({
       {
         title: loaderData?.name,
       },
+      {
+        name: 'og:title',
+        content: loaderData?.name,
+      },
     ],
   }),
 });
