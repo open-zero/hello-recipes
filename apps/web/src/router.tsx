@@ -36,6 +36,7 @@ export function createRouter() {
       context: { queryClient, userId: null },
       defaultPreload: 'intent',
       defaultNotFoundComponent: () => <NotFoundPage />,
+      defaultSsr: false,
     }),
     queryClient,
   );

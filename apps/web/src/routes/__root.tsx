@@ -6,6 +6,7 @@ import { CacheProvider } from '@emotion/react';
 import interCss from '@fontsource-variable/inter?url';
 import loraCss from '@fontsource-variable/lora?url';
 import { CssBaseline, ThemeProvider } from '@mui/material';
+import type {} from '@mui/material/themeCssVarsAugmentation';
 import type { QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import {
@@ -78,7 +79,7 @@ function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <CacheProvider value={emotionCache}>
-      <ThemeProvider theme={theme} noSsr forceThemeRerender>
+      <ThemeProvider theme={theme} forceThemeRerender>
         <CssBaseline />
         <SnackbarProvider>{children}</SnackbarProvider>
       </ThemeProvider>

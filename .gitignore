@@ -211,3 +211,6 @@ server/dist
 public/dist
 
 packages/database/generated-client
+.nitro
+.tanstack
+.vercel
