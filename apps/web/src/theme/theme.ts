@@ -148,11 +148,6 @@ export const theme = createTheme({
         },
       },
     },
-    MuiUseMediaQuery: {
-      defaultProps: {
-        noSsr: true,
-      },
-    },
     MuiPopover: {
       styleOverrides: {
         paper: ({ theme }) => ({
