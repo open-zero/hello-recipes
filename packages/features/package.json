@@ -30,7 +30,7 @@
   "devDependencies": {
     "@open-zero/eslint-config": "workspace:*",
     "@open-zero/typescript-config": "workspace:*",
-    "@types/node": "^22.15.33",
+    "@types/node": "^22.15.34",
     "decimal.js": "^10.5.0",
     "typescript": "~5.8.3"
   }

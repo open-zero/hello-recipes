@@ -1,14 +1,15 @@
 import { sentryVitePlugin } from '@sentry/vite-plugin';
-import { tanstackRouter } from '@tanstack/router-plugin/vite';
-import react from '@vitejs/plugin-react';
+import { tanstackStart } from '@tanstack/react-start/plugin/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [
-    tanstackRouter(),
-    react({
-      babel: {
-        plugins: [['babel-plugin-react-compiler']],
+    tanstackStart({
+      target: 'vercel',
+      react: {
+        babel: {
+          plugins: [['babel-plugin-react-compiler']],
+        },
       },
     }),
     sentryVitePlugin({
