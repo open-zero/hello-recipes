@@ -3,11 +3,11 @@ import { authClient } from './features/auth/authClient';
 import { router } from './main';
 
 export function App() {
-  const { data: session, isPending, error } = authClient.useSession();
+  const { data: session } = authClient.useSession();
 
-  if (isPending || error) {
-    return null;
-  }
+  // if (isPending || error) {
+  //   return null;
+  // }
 
   return (
     <RouterProvider

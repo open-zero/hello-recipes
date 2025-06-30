@@ -16,6 +16,19 @@ interface RouterContext {
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: RootComponent,
   notFoundComponent: NotFoundPage,
+  head: () => {
+    return {
+      meta: [
+        {
+          title: 'Test root',
+        },
+        {
+          property: 'og:title',
+          content: 'Test root',
+        },
+      ],
+    };
+  },
 });
 
 function RootComponent() {
