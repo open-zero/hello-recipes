@@ -6,6 +6,9 @@ export default defineConfig({
   plugins: [
     tanstackStart({
       target: 'vercel',
+      spa: {
+        enabled: true,
+      },
       react: {
         babel: {
           plugins: [['babel-plugin-react-compiler']],

@@ -1,4 +1,5 @@
 import { NotFoundPage } from '#src/components/NotFoundPage';
+import { authClient } from '#src/features/auth/authClient';
 import { theme } from '#src/theme/theme';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
@@ -16,7 +17,7 @@ import {
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { SnackbarProvider } from 'notistack';
 import type { ReactNode } from 'react';
-import '../theme/theme.css';
+import appCss from '../theme/theme.css?url';
 
 interface RouterContext {
   queryClient: QueryClient;
@@ -24,6 +25,13 @@ interface RouterContext {
 }
 
 export const Route = createRootRouteWithContext<RouterContext>()({
+  beforeLoad: async () => {
+    const { data } = await authClient.getSession();
+
+    return {
+      userId: data?.user.id ?? null,
+    };
+  },
   component: RootComponent,
   notFoundComponent: NotFoundPage,
   head: () => {
@@ -43,6 +51,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       links: [
         { rel: 'stylesheet', href: interCss },
         { rel: 'stylesheet', href: loraCss },
+        { rel: 'stylesheet', href: appCss },
         {
           rel: 'icon',
           href: '/assets/lil-guy.svg',
@@ -69,7 +78,7 @@ function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <CacheProvider value={emotionCache}>
-      <ThemeProvider theme={theme} forceThemeRerender>
+      <ThemeProvider theme={theme} noSsr forceThemeRerender>
         <CssBaseline />
         <SnackbarProvider>{children}</SnackbarProvider>
       </ThemeProvider>
